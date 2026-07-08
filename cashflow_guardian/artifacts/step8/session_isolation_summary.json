@@ -1,0 +1,26 @@
+{
+  "session_a_001": {
+    "http_status": 200,
+    "message_id": "session-a-001",
+    "normalized_source": "company-a-events",
+    "session_id": "ambient-company-a-events-session-a-001",
+    "status": "success",
+    "trace_id": "trace_session-a-001"
+  },
+  "session_a_002": {
+    "http_status": 200,
+    "message_id": "session-a-002",
+    "normalized_source": "company-a-events",
+    "session_id": "ambient-company-a-events-session-a-002",
+    "status": "success",
+    "trace_id": "trace_session-a-002"
+  },
+  "session_b_001": {
+    "http_status": 200,
+    "message_id": "session-b-001",
+    "normalized_source": "company-b-events",
+    "session_id": "ambient-company-b-events-session-b-001",
+    "status": "success",
+    "trace_id": "trace_session-b-001"
+  }
+}

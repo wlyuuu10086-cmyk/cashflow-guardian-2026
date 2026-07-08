@@ -1,0 +1,8 @@
+{
+  "http_status": 200,
+  "raw_synthetic_pii_absent_from_sanitized_artifacts": true,
+  "status": "success",
+  "warnings": [
+    "Sensitive message content was redacted before model use."
+  ]
+}

@@ -1,0 +1,143 @@
+CashFlow Guardian: Secure Policy-Gated SME Cash-Flow Intelligence
+=================================================================
+
+EXECUTIVE MIND MAP
+------------------
+
+[ SME Liquidity Risk Problem ]
+             |
+             v
++---------------------------------------------------------------------+
+| CashFlow Guardian                                                   |
+| Early warning + scenario simulation + draft intervention support     |
++------------------------+----------------------+---------------------+
+                         |                      |
+                         |                      |
+        +----------------+------+      +--------+------------------+
+        | Safety Principle     |      | User Value                |
+        | LLM does not compute |      | Explain risk in plain     |
+        | math or mutate data  |      | language for RM review    |
+        +----------+-----------+      +------------+--------------+
+                   |                               |
+                   v                               v
+          +--------+---------+             +-------+--------+
+          | Deterministic    |             | Google ADK     |
+          | financial tools  |             | explanation    |
+          +--------+---------+             | layer only     |
+                   |                       +-------+--------+
+                   |                               |
+                   +---------------+---------------+
+                                   |
+                                   v
+                    +--------------+---------------+
+                    | Submission Evidence          |
+                    | tests, traces, immutable DB, |
+                    | policy blocks, HITL boundary |
+                    +------------------------------+
+
+
+RUNTIME ARCHITECTURE FLOW
+-------------------------
+
+   [ User Query / Pub/Sub-Style Event ]
+                   |
+                   v
+   +-----------------------------------------------+
+   | FastAPI Ambient Endpoint                      |
+   | app/adk_app.py                                |
+   | - validates envelope                          |
+   | - exposes /health and /trigger/pubsub         |
+   +-----------------------+-----------------------+
+                           |
+                           v
+   +-----------------------------------------------+     rejects:
+   | Event Parser + Trusted Context Binder         | <--- invalid JSON, oversized payloads,
+   | src/cashflow_guardian/agent/ambient.py        |      privileged fields, bad IDs
+   | - decodes base64 payload                      |
+   | - binds server-side SecurityContext           |
+   +-----------------------+-----------------------+
+                           |
+                           v
+   +-----------------------------------------------+     blocks:
+   | Security Screen + PII Redaction               | <--- prompt injection, unsafe text,
+   | src/cashflow_guardian/security                |      sensitive user content
+   +-----------------------+-----------------------+
+                           |
+                           v
+   +-----------------------------------------------+     records:
+   | Policy-Gated Tool Executor                    | ---> audit event + trace steps
+   | execute_tool_with_policy()                    |
+   | src/cashflow_guardian/tools/registry.py       |
+   +-----------------------+-----------------------+
+                           |
+                           v
+   +-----------------------------------------------+     denies:
+   | RBAC + Human-in-the-Loop Policy Gate          | <--- missing role permission,
+   | src/cashflow_guardian/policy/engine.py        |      privileged watchlist approval
+   +-----------------------+-----------------------+
+                           |
+                           v
+   +-----------------------------------------------+
+   | Operation Planner                             |
+   | event_type -> model-safe tool sequence        |
+   +------+-----------+-----------+----------+-----+
+          |           |           |          |
+          v           v           v          v
+ +--------+----+ +----+------+ +--+-----+ +--+----------+
+ | Data Engine | | Risk     | | Peer   | | Scenario    |
+ | quality,    | | scoring  | | bench- | | simulation  |
+ | history,    | | and RAG  | | marking| | what-if     |
+ | portfolio   | | tier     | |        | | projection  |
+ +--------+----+ +----+------+ +--+-----+ +--+----------+
+          |           |           |          |
+          +-----------+-----------+----------+
+                              |
+                              v
+            +-----------------+------------------+
+            | Intervention Engine                 |
+            | draft plan only; human review stays |
+            | outside model-safe tool access      |
+            +-----------------+------------------+
+                              |
+              +---------------+----------------+
+              |                                |
+              v                                v
+ +------------+------------+      +------------+-------------+
+ | DuckDB Read-Only Source |      | Demo Action Store        |
+ | financial records       |      | JSON pending approvals   |
+ +------------+------------+      +------------+-------------+
+              |                                |
+              +---------------+----------------+
+                              |
+                              v
+            +-----------------+------------------+
+            | Safe Structured Response            |
+            | deterministic facts + ADK-readable  |
+            | explanation; no invented math       |
+            +-------------------------------------+
+
+
+KAGGLE / NOTEBOOK STORY SECTIONS
+--------------------------------
+
+[ Title ]
+  CashFlow Guardian: Secure Policy-Gated SME Liquidity Intelligence
+
+[ Section 1 - Problem ]
+  SME liquidity crises require early warnings, but pure LLM math is unsafe.
+
+[ Section 2 - Architecture ]
+  FastAPI validates events, server binds SecurityContext, policy gates every tool.
+
+[ Section 3 - Deterministic Engines ]
+  Data, risk, benchmark, scenario, and intervention engines own the calculations.
+
+[ Section 4 - Agent Role ]
+  Google ADK explains and routes outputs; it cannot mutate the source database.
+
+[ Section 5 - Security Evidence ]
+  Prompt injection blocking, PII redaction, RBAC denial, HITL approval boundary.
+
+[ Section 6 - Evaluation Evidence ]
+  Passing tests, immutable DuckDB checks, audit traces, smoke trace validation.
+

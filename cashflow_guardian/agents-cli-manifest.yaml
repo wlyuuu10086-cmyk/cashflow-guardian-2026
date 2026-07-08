@@ -1,0 +1,7 @@
+name: cashflow-guardian
+acli_version: "0.6.1"
+agent_directory: agents_cli_agent
+language: python
+create_params:
+  deployment_target: none
+  session_type: in_memory

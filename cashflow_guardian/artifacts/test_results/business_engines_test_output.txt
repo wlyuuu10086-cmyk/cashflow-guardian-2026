@@ -1,0 +1,181 @@
+Executing: python -m pytest tests/unit/benchmark_engine -q
+.....                                                                    [100%]
+5 passed in 0.84s
+
+================================================================================
+
+Executing: python -m pytest tests/unit/scenario_engine -q
+....                                                                     [100%]
+4 passed in 2.00s
+
+================================================================================
+
+Executing: python -m pytest tests/unit/intervention_engine -q
+....                                                                     [100%]
+4 passed in 0.04s
+
+================================================================================
+
+Executing: python -m pytest tests/unit/tools -q
+....                                                                     [100%]
+4 passed in 0.73s
+
+================================================================================
+
+Executing: python -m pytest tests/integration/test_benchmark_engine_real_db.py -q
+.                                                                        [100%]
+1 passed in 0.66s
+
+================================================================================
+
+Executing: python -m pytest tests/integration/test_scenario_engine_real_db.py -q
+.                                                                        [100%]
+1 passed in 2.14s
+
+================================================================================
+
+Executing: python -m pytest tests/integration/test_tool_workflows.py -q
+...                                                                      [100%]
+3 passed in 4.74s
+
+================================================================================
+
+Executing: python scripts/validate_business_engines.py
+======================================================================
+CASHFLOW GUARDIAN: BUSINESS ENGINES VALIDATION
+======================================================================
+Connecting to database: D:\5-Days-AI-Kaggle\Capstone\cashflow_guardian\sme_cashflow_stress_project\data\sme_cashflow_stress.duckdb
+Selected target client: B01395 as of 2025-06
+
+--- Running Peer Benchmark Comparison ---
+Peer Group Method: industry_and_revenue_band
+Peer Count: 30
+Industry: Construction Services
+Metric Gaps:
+  - volatility: Biz=33954.4208852809, Peer=30183.457801581793, Gap=3770.963083699109, Direction=similar
+  - collection_days: Biz=45.5, Peer=45.75, Gap=-0.25, Direction=similar
+  - late_invoice_rate: Biz=1.0, Peer=1.0, Gap=0.0, Direction=similar
+  - repayment_burden: Biz=4.890055883635211, Peer=0.8874146959660518, Gap=4.002641187669159, Direction=worse
+  - payroll_burden: Biz=5.216121656582829, Peer=1.803665271626291, Gap=3.4124563849565384, Direction=worse
+  - credit_utilization: Biz=1.5, Peer=1.1749999999999998, Gap=0.3250000000000002, Direction=worse
+  - overdraft_days: Biz=16.0, Peer=10.0, Gap=6.0, Direction=worse
+  - trend: Biz=-20804.279999999984, Peer=-24694.15000000001, Gap=3889.8700000000244, Direction=better
+
+--- Running No-Change Scenario Simulation ---
+Baseline Risk Score: 0.1012 (AMBER)
+Simulated Risk Score: 0.1012 (AMBER)
+Score Difference: 0.000000 (No-change comparison)
+
+--- Running Downside Scenario Simulation ---
+Simulated Inflow: 0.00 (Baseline: 7,316.99)
+Amount Deferred: 28,165.68
+Simulated Risk Score: 0.0870 (GREEN)
+Risk Score Change: -1.42%
+Risk Tier Change: improved
+
+--- Running One-Way Sensitivity Analysis ---
+Inflow Shock Sensitivity:
+  Shock: -30.0% | Net Cash Flow: -108,807.05 | Score: 0.1012 (AMBER)
+  Shock: -20.0% | Net Cash Flow: -108,075.35 | Score: 0.1012 (AMBER)
+  Shock: -10.0% | Net Cash Flow: -107,343.65 | Score: 0.1012 (AMBER)
+  Shock:  +0.0% | Net Cash Flow: -106,611.95 | Score: 0.1012 (AMBER)
+  Shock: +10.0% | Net Cash Flow: -105,880.25 | Score: 0.1012 (AMBER)
+  Shock: +20.0% | Net Cash Flow: -105,148.55 | Score: 0.1012 (AMBER)
+
+--- Running Draft Intervention Plan ---
+Plan Priority: MEDIUM
+Evidence Codes: ['AMBER_RISK_TIER', 'HIGH_REPAYMENT_BURDEN', 'COLLECTION_DELAY_GAP', 'ACTIVE_OVERDRAFT', 'DECLINING_CASH_FLOW']
+Human Approval Required: False
+Recommended Draft Actions:
+  - [MEDIUM] increase monitoring frequency: Business is in the AMBER (medium risk) tier. Increase review frequency.
+  - [MEDIUM] request updated cash-flow information: Request recent bank statements and cash flow projections to clarify stress signals.
+  - [MEDIUM] review repayment schedule: Monthly scheduled repayments exceed 25% of cash inflows (Business value: 489.0%).
+  - [MEDIUM] verify large outstanding invoices: Collection days are significantly higher than peer benchmarks (Business value: 45.5 days, Peer median: 45.8 days).
+  - [MEDIUM] assess short-term liquidity support eligibility: Active overdraft days (16 days) detected in the current month.
+Prohibited Actions (Security Filter):
+  - [BLOCKED] automatic credit-limit reduction
+  - [BLOCKED] automatic loan rejection
+  - [BLOCKED] automatic collections action
+  - [BLOCKED] customer email
+  - [BLOCKED] payment execution
+  - [BLOCKED] legal escalation
+  - [BLOCKED] account freezing
+
+======================================================================
+VALIDATION COMPLETED SUCCESSFULLY
+======================================================================
+
+================================================================================
+
+Executing: python scripts/validate_tools.py
+======================================================================
+CASHFLOW GUARDIAN: STRUCTURED TOOLS VALIDATION
+======================================================================
+DB Path: D:\5-Days-AI-Kaggle\Capstone\cashflow_guardian\sme_cashflow_stress_project\data\sme_cashflow_stress.duckdb
+DB Modification Time Before: 1783066679.5767782
+DB File Size Before: 17313792 bytes
+
+--- Listing Registered Tools ---
+Tool: check_database_health | Permission: read-only | Approval Required: False
+Tool: check_business_data_quality | Permission: read-only | Approval Required: False
+Tool: get_portfolio_snapshot | Permission: read-only | Approval Required: False
+Tool: get_business_history | Permission: read-only | Approval Required: False
+Tool: build_point_in_time_features | Permission: read-only | Approval Required: False
+Tool: score_cashflow_risk | Permission: read-only | Approval Required: False
+Tool: compare_with_peers | Permission: read-only | Approval Required: False
+Tool: simulate_cashflow_scenario | Permission: read-only | Approval Required: False
+Tool: draft_intervention_plan | Permission: read-only | Approval Required: False
+
+--- Scanning for Prohibited Tools ---
+Success: Zero prohibited tools detected in registry.
+
+--- Invoking Registered Tools and Verifying JSON Serialization ---
+Using test business=B01432, month=2025-06
+
+Calling tool: check_database_health ...
+  Result Object Type: DatabaseHealthResult
+  JSON Serialization: Passed (433 bytes)
+
+Calling tool: check_business_data_quality ...
+  Result Status: success
+  JSON Serialization: Passed (424 bytes)
+
+Calling tool: get_portfolio_snapshot ...
+  Result Status: success
+  JSON Serialization: Passed (1701 bytes)
+
+Calling tool: get_business_history ...
+  Result Status: success
+  JSON Serialization: Passed (1661 bytes)
+
+Calling tool: build_point_in_time_features ...
+  Result Object Type: FeatureVectorResult
+  JSON Serialization: Passed (2219 bytes)
+
+Calling tool: score_cashflow_risk ...
+  Result Status: success
+  JSON Serialization: Passed (503 bytes)
+
+Calling tool: compare_with_peers ...
+  Result Status: success
+  JSON Serialization: Passed (2900 bytes)
+
+Calling tool: simulate_cashflow_scenario ...
+  Result Status: success
+  JSON Serialization: Passed (1766 bytes)
+
+Calling tool: draft_intervention_plan ...
+  Result Status: success
+  JSON Serialization: Passed (1860 bytes)
+
+--- Verifying Database Immutability ---
+DB Modification Time After: 1783066679.5767782
+DB File Size After: 17313792 bytes
+Success: Source database was NOT modified. Immutability verified.
+
+======================================================================
+TOOLS VALIDATION COMPLETED SUCCESSFULLY
+======================================================================
+
+================================================================================
+

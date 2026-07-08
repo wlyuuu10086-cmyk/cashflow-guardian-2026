@@ -1,0 +1,9 @@
+{
+  "body": {
+    "correlation_id": "step8-priv-1",
+    "error_code": "PRIVILEGED_FIELD_REJECTED",
+    "message": "Unsupported privileged fields: ['role']",
+    "status": "error"
+  },
+  "status_code": 400
+}

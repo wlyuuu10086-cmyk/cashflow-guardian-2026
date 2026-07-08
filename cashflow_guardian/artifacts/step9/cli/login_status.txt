@@ -1,0 +1,8 @@
+﻿
+Status
+
+Authentication
+
+  Authenticated as Gemini API Key (GEMINI_API_KEY)
+
+

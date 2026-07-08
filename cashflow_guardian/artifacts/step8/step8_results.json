@@ -1,0 +1,515 @@
+{
+  "date": "2026-07-03T11:28:07.733935Z",
+  "db_integrity": {
+    "after": {
+      "mtime": 1783066679.5767782,
+      "size": 17313792
+    },
+    "before": {
+      "mtime": 1783066679.5767782,
+      "size": 17313792
+    },
+    "unchanged": true
+  },
+  "demo_actions_integrity": {
+    "after": {
+      "mtime": 1783076025.2022989,
+      "size": 3029
+    },
+    "before": {
+      "mtime": 1783076025.2022989,
+      "size": 3029
+    },
+    "unchanged": true
+  },
+  "gemini_used": false,
+  "health": {
+    "body": {
+      "adk_agent": "cashflow_guardian_agent",
+      "otel_to_cloud": false,
+      "service": "cashflow_guardian",
+      "status": "ok"
+    },
+    "status_code": 200
+  },
+  "live_model_mode": false,
+  "malicious_text_absent_from_sanitized_artifacts": true,
+  "model_safe_tool_names": [
+    "check_business_data_quality",
+    "get_portfolio_snapshot",
+    "get_business_history",
+    "score_cashflow_risk",
+    "compare_with_peers",
+    "simulate_cashflow_scenario",
+    "draft_intervention_plan"
+  ],
+  "model_safe_tool_signatures": {
+    "check_business_data_quality": [
+      "business_id",
+      "as_of_month"
+    ],
+    "compare_with_peers": [
+      "business_id",
+      "as_of_month"
+    ],
+    "draft_intervention_plan": [
+      "business_id",
+      "as_of_month"
+    ],
+    "get_business_history": [
+      "business_id",
+      "as_of_month"
+    ],
+    "get_portfolio_snapshot": [
+      "as_of_month",
+      "limit"
+    ],
+    "score_cashflow_risk": [
+      "business_id",
+      "as_of_month"
+    ],
+    "simulate_cashflow_scenario": [
+      "business_id",
+      "as_of_month",
+      "inflow_change_pct",
+      "outflow_change_pct",
+      "collection_delay_change_days"
+    ]
+  },
+  "pii_absent_from_sanitized_artifacts": true,
+  "server_command": "python -m uvicorn app.adk_app:app --host 127.0.0.1 --port 8080",
+  "test_rows": [
+    {
+      "correlation_id": "step8-valid-1",
+      "error_code": null,
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 200,
+      "model_invoked": false,
+      "policy_result": [
+        "POLICY_TOOL_ALLOWED"
+      ],
+      "result": "success",
+      "scenario": "valid_portfolio",
+      "session_id": "ambient-demo-cashflow-events-step8-valid-1",
+      "tool_invoked": [
+        "get_portfolio_snapshot"
+      ],
+      "trace_id": "trace_step8-valid-1"
+    },
+    {
+      "correlation_id": "step8-valid-2",
+      "error_code": null,
+      "event_type": "analyze_company",
+      "hitl_state": "draft_only",
+      "http_status": 200,
+      "model_invoked": false,
+      "policy_result": [
+        "POLICY_TOOL_ALLOWED"
+      ],
+      "result": "success",
+      "scenario": "valid_analyze_company",
+      "session_id": "ambient-demo-cashflow-events-step8-valid-2",
+      "tool_invoked": [
+        "check_business_data_quality",
+        "compare_with_peers",
+        "draft_intervention_plan",
+        "get_business_history",
+        "score_cashflow_risk"
+      ],
+      "trace_id": "trace_step8-valid-2"
+    },
+    {
+      "correlation_id": "step8-valid-3",
+      "error_code": null,
+      "event_type": "benchmark_company",
+      "hitl_state": "not_applicable",
+      "http_status": 200,
+      "model_invoked": false,
+      "policy_result": [
+        "POLICY_TOOL_ALLOWED"
+      ],
+      "result": "success",
+      "scenario": "valid_benchmark",
+      "session_id": "ambient-demo-cashflow-events-step8-valid-3",
+      "tool_invoked": [
+        "compare_with_peers"
+      ],
+      "trace_id": "trace_step8-valid-3"
+    },
+    {
+      "correlation_id": "step8-valid-4",
+      "error_code": null,
+      "event_type": "simulate_scenario",
+      "hitl_state": "not_applicable",
+      "http_status": 200,
+      "model_invoked": false,
+      "policy_result": [
+        "POLICY_TOOL_ALLOWED"
+      ],
+      "result": "success",
+      "scenario": "valid_scenario",
+      "session_id": "ambient-demo-cashflow-events-step8-valid-4",
+      "tool_invoked": [
+        "score_cashflow_risk",
+        "simulate_cashflow_scenario"
+      ],
+      "trace_id": "trace_step8-valid-4"
+    },
+    {
+      "correlation_id": "step8-valid-5",
+      "error_code": null,
+      "event_type": "draft_intervention",
+      "hitl_state": "draft_only",
+      "http_status": 200,
+      "model_invoked": false,
+      "policy_result": [
+        "POLICY_TOOL_ALLOWED"
+      ],
+      "result": "success",
+      "scenario": "valid_draft_intervention",
+      "session_id": "ambient-demo-cashflow-events-step8-valid-5",
+      "tool_invoked": [
+        "draft_intervention_plan",
+        "score_cashflow_risk"
+      ],
+      "trace_id": "trace_step8-valid-5"
+    },
+    {
+      "correlation_id": "step8-injection",
+      "error_code": null,
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 200,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "blocked",
+      "scenario": "prompt_injection",
+      "session_id": "ambient-demo-cashflow-events-step8-injection",
+      "tool_invoked": [],
+      "trace_id": "trace_step8-injection"
+    },
+    {
+      "correlation_id": "step8-pii",
+      "error_code": null,
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 200,
+      "model_invoked": false,
+      "policy_result": [
+        "POLICY_TOOL_ALLOWED"
+      ],
+      "result": "success",
+      "scenario": "pii_redaction",
+      "session_id": "ambient-demo-cashflow-events-step8-pii",
+      "tool_invoked": [
+        "get_portfolio_snapshot"
+      ],
+      "trace_id": "trace_step8-pii"
+    },
+    {
+      "correlation_id": "step8-priv-1",
+      "error_code": "PRIVILEGED_FIELD_REJECTED",
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "privilege_role",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-priv-2",
+      "error_code": "PRIVILEGED_FIELD_REJECTED",
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "privilege_permissions",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-priv-3",
+      "error_code": "PRIVILEGED_FIELD_REJECTED",
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "privilege_security_context",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-priv-4",
+      "error_code": "PRIVILEGED_FIELD_REJECTED",
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "privilege_approved",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-priv-5",
+      "error_code": "PRIVILEGED_FIELD_REJECTED",
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "privilege_approval_status",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-priv-6",
+      "error_code": "PRIVILEGED_FIELD_REJECTED",
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "privilege_reviewer_id",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-priv-7",
+      "error_code": "PRIVILEGED_FIELD_REJECTED",
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "privilege_tool_name",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "session-a-001",
+      "error_code": null,
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 200,
+      "model_invoked": false,
+      "policy_result": [
+        "POLICY_TOOL_ALLOWED"
+      ],
+      "result": "success",
+      "scenario": "session_a_001",
+      "session_id": "ambient-company-a-events-session-a-001",
+      "tool_invoked": [
+        "get_portfolio_snapshot"
+      ],
+      "trace_id": "trace_session-a-001"
+    },
+    {
+      "correlation_id": "session-b-001",
+      "error_code": null,
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 200,
+      "model_invoked": false,
+      "policy_result": [
+        "POLICY_TOOL_ALLOWED"
+      ],
+      "result": "success",
+      "scenario": "session_b_001",
+      "session_id": "ambient-company-b-events-session-b-001",
+      "tool_invoked": [
+        "get_portfolio_snapshot"
+      ],
+      "trace_id": "trace_session-b-001"
+    },
+    {
+      "correlation_id": "session-a-002",
+      "error_code": null,
+      "event_type": "portfolio_snapshot",
+      "hitl_state": "not_applicable",
+      "http_status": 200,
+      "model_invoked": false,
+      "policy_result": [
+        "POLICY_TOOL_ALLOWED"
+      ],
+      "result": "success",
+      "scenario": "session_a_002",
+      "session_id": "ambient-company-a-events-session-a-002",
+      "tool_invoked": [
+        "get_portfolio_snapshot"
+      ],
+      "trace_id": "trace_session-a-002"
+    },
+    {
+      "correlation_id": "unassigned",
+      "error_code": "INVALID_PUBSUB_ENVELOPE",
+      "event_type": null,
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "missing_message",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-missing-data",
+      "error_code": "INVALID_PUBSUB_ENVELOPE",
+      "event_type": null,
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "missing_data",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-null-data",
+      "error_code": "INVALID_PUBSUB_ENVELOPE",
+      "event_type": null,
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "null_data",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-bad64",
+      "error_code": "INVALID_BASE64",
+      "event_type": null,
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "invalid_base64",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-utf8",
+      "error_code": "INVALID_UTF8",
+      "event_type": null,
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "invalid_utf8",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-json",
+      "error_code": "INVALID_JSON",
+      "event_type": null,
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "invalid_json",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-unsupported",
+      "error_code": "INVALID_EVENT",
+      "event_type": null,
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "unsupported_event_type",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-bad-biz",
+      "error_code": "INVALID_EVENT",
+      "event_type": null,
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "invalid_business_id",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-extra",
+      "error_code": "INVALID_EVENT",
+      "event_type": null,
+      "hitl_state": "not_applicable",
+      "http_status": 400,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "unexpected_extra_field",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    },
+    {
+      "correlation_id": "step8-oversize",
+      "error_code": "PAYLOAD_TOO_LARGE",
+      "event_type": null,
+      "hitl_state": "not_applicable",
+      "http_status": 413,
+      "model_invoked": false,
+      "policy_result": null,
+      "result": "error",
+      "scenario": "oversized_payload",
+      "session_id": null,
+      "tool_invoked": [],
+      "trace_id": null
+    }
+  ],
+  "trace_ids": [
+    "trace_session-a-001",
+    "trace_session-a-002",
+    "trace_session-b-001",
+    "trace_step8-injection",
+    "trace_step8-pii",
+    "trace_step8-valid-1",
+    "trace_step8-valid-2",
+    "trace_step8-valid-3",
+    "trace_step8-valid-4",
+    "trace_step8-valid-5"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+    "selection_rationale": "Thresholds selected on Validation set calibrated risk scores. Red (0.70 Target/Actual 90th percentile) caps portfolio review alert capacity at 10%. Amber is set to guarantee a minimum of 90% recall of cash stress events. Critical (97th percentile) flags immediate priority review cases.",
+    "tiers": {
+        "low": {
+            "min": 0.0,
+            "max": 0.1
+        },
+        "medium": {
+            "min": 0.1,
+            "max": 0.1685
+        },
+        "high": {
+            "min": 0.1685,
+            "max": 0.2734
+        },
+        "critical": {
+            "min": 0.2734,
+            "max": 1.0
+        }
+    }
+}

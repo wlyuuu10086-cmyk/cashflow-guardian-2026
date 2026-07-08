@@ -1,0 +1,21 @@
+{
+  "seed": 20260620,
+  "n_businesses": 1500,
+  "date_range": "2024-01 to 2025-12",
+  "total_rows": 742018,
+  "tables": {
+    "bank_transactions": 482790,
+    "invoices": 90000,
+    "repayments": 46790,
+    "business_monthly_snapshots": 36000,
+    "payroll": 36000,
+    "business_monthly_outcomes": 36000,
+    "credit_reviews": 9898,
+    "loans": 2800,
+    "business_customers": 1500,
+    "region_macro_index": 144,
+    "relationship_managers": 60,
+    "calendar_months": 24,
+    "industry_benchmark": 12
+  }
+}

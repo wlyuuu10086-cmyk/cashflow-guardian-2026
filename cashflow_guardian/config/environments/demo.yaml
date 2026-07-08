@@ -1,0 +1,27 @@
+# CashFlow Guardian Demo Environment Configuration
+environment: "demo"
+
+database:
+  path: "sme_cashflow_stress_project/data/sme_cashflow_stress.duckdb"
+  read_only: true
+
+action_store:
+  # The central demo file used by the RM dashboard
+  path: "data/demo_actions.json"
+
+logging:
+  level: "INFO"
+  format: "[DEMO] %(asctime)s - %(message)s"
+
+llm:
+  # Presentation-grade LLM settings
+  temperature: 0.0  # Force deterministic responses for demo reliability
+  max_output_tokens: 2048
+
+security:
+  mask_pii: false  # Show names to make the demo feel realistic and engaging
+  enable_injection_detection: true
+
+dashboard:
+  show_portfolio_aggregates: true
+  enable_interactive_slider: true

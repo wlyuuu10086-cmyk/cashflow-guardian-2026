@@ -1,0 +1,8 @@
+{
+    "isotonic_calibration": {
+        "validation_brier_score_lr": 0.11374266066335759,
+        "validation_brier_score_rf": 0.11415580065645721,
+        "test_brier_score_lr": 0.10697966787029728,
+        "test_brier_score_rf": 0.1070650144753561
+    }
+}

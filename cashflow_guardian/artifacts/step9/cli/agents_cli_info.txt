@@ -1,0 +1,10 @@
+﻿agents-cli : WARNING:root:Could not query installed skills: Command '['E:\\5 Days AI Agent\\npx.CMD', '-y', 'skills@1.4
+.8', 'list', '--json']' timed out after 15 seconds
+所在位置 行:2 字符: 8
++ $out = agents-cli info --json 2>&1 | Out-String; $out = $out -replace ...
++        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING:root:Co...fter 15 seconds:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+{"cli_version": "0.6.1", "cli_install_path": "C:\\Users\\lenovo\\AppData\\Roaming\\uv\\tools\\google-agents-cli\\Lib\\site-packages\\google\\agents\\cli", "os_info": "Windows-10-10.0.26200-SP0", "installed_skills": null, "project_root": "D:\\5-Days-AI-Kaggle\\Capstone\\cashflow_guardian", "project_name": "cashflow-guardian", "deployment_target": "none", "agent_directory": "src/cashflow_guardian/agent", "is_a2a": false, "region": "us-east1"}
+

@@ -1,0 +1,22 @@
+# CashFlow Guardian Local Environment Configuration
+environment: "local"
+
+database:
+  path: "sme_cashflow_stress_project/data/sme_cashflow_stress.duckdb"
+  read_only: true
+
+action_store:
+  path: "data/demo_actions.json"
+
+logging:
+  level: "DEBUG"
+  format: "[LOCAL] %(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+llm:
+  # Local playground settings (uses dev parameters)
+  temperature: 0.1
+  max_output_tokens: 1024
+
+security:
+  bypass_for_local_debugging: false
+  mask_pii: false  # Allow showing names for local verification

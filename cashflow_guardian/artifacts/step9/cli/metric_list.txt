@@ -1,0 +1,26 @@
+﻿
+  Available Built-in Evaluation  
+             Metrics             
+┌───────────────────────────────┐
+│ Metric Name                   │
+├───────────────────────────────┤
+│ FINAL_RESPONSE_MATCH          │
+│ FINAL_RESPONSE_QUALITY        │
+│ FINAL_RESPONSE_REFERENCE_FREE │
+│ GECKO_TEXT2IMAGE              │
+│ GECKO_TEXT2VIDEO              │
+│ GENERAL_QUALITY               │
+│ GROUNDING                     │
+│ HALLUCINATION                 │
+│ INSTRUCTION_FOLLOWING         │
+│ MULTI_TURN_GENERAL_QUALITY    │
+│ MULTI_TURN_TASK_SUCCESS       │
+│ MULTI_TURN_TEXT_QUALITY       │
+│ MULTI_TURN_TOOL_USE_QUALITY   │
+│ MULTI_TURN_TRAJECTORY_QUALITY │
+│ SAFETY                        │
+│ TEXT_QUALITY                  │
+│ TOOL_USE_QUALITY              │
+└───────────────────────────────┘
+
+

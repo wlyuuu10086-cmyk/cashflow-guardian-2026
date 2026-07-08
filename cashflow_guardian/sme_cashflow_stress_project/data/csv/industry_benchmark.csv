@@ -1,0 +1,13 @@
+industry_id,industry,benchmark_margin,benchmark_cash_flow_volatility,benchmark_collection_days,benchmark_repayment_burden_pct,payroll_intensity,seasonality_peak_month,typical_transaction_intensity,economic_sensitivity
+IND01,Restaurants & Food Service,0.30,0.12,28,12,0.70,7,1.2,0.75
+IND02,Retail Stores,0.34,0.15,22,10,0.55,11,1.5,0.65
+IND03,Construction Services,0.25,0.22,45,18,0.40,8,0.8,0.90
+IND04,Manufacturing,0.28,0.18,38,16,0.42,9,0.9,0.80
+IND05,Healthcare Clinics,0.38,0.10,35,14,0.62,3,1.0,0.35
+IND06,Professional Services,0.45,0.09,32,12,0.58,2,0.7,0.45
+IND07,Transportation & Logistics,0.27,0.20,30,14,0.50,10,1.0,0.85
+IND08,E-commerce Sellers,0.33,0.25,18,9,0.35,11,1.8,0.95
+IND09,Wholesale Distribution,0.24,0.21,42,17,0.38,9,0.9,0.80
+IND10,Personal Services,0.41,0.13,20,9,0.68,5,1.1,0.55
+IND11,Education & Training,0.36,0.12,30,10,0.60,8,0.8,0.40
+IND12,Hospitality & Travel,0.31,0.24,25,20,0.78,7,1.3,1.00

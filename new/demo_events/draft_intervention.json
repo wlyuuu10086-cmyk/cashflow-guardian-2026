@@ -1,0 +1,10 @@
+{
+  "message": {
+    "data": "eyJldmVudF90eXBlIjoiZHJhZnRfaW50ZXJ2ZW50aW9uIiwiYnVzaW5lc3NfaWQiOiJCMDEzOTUiLCJhc19vZl9tb250aCI6IjIwMjUtMDYiLCJyZXF1ZXN0ZWRfYnkiOiJkZW1vLnByZXNlbnRlciIsIm1lc3NhZ2UiOiJEcmFmdCBhIGNvbnNlcnZhdGl2ZSBpbnRlcnZlbnRpb24gcGxhbiBmb3IgaHVtYW4gcmV2aWV3LiIsInBhcmFtZXRlcnMiOnt9fQ==",
+    "messageId": "demo-draft-intervention-b01395-2025-06",
+    "attributes": {
+      "source": "demo"
+    }
+  },
+  "subscription": "projects/local/subscriptions/cashflow-guardian-demo"
+}

@@ -1,0 +1,144 @@
+table_name,column_name,dtype,description
+business_customers,business_id,VARCHAR,Unique business identifier.
+business_customers,business_name,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,industry_id,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,industry,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,region_id,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,region,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,state,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,city_tier,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,years_in_business,INTEGER,Synthetic project field; see README/project brief.
+business_customers,revenue_band,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,estimated_monthly_revenue_band_midpoint,INTEGER,Synthetic project field; see README/project brief.
+business_customers,employee_count_base,INTEGER,Synthetic project field; see README/project brief.
+business_customers,legal_structure,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,credit_score_band_at_origination,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,has_prior_delinquency,INTEGER,Synthetic project field; see README/project brief.
+business_customers,owner_experience_years,INTEGER,Synthetic project field; see README/project brief.
+business_customers,online_sales_share,DOUBLE,Synthetic project field; see README/project brief.
+business_customers,relationship_manager_id,VARCHAR,Synthetic project field; see README/project brief.
+business_customers,onboarding_date,DATE,Synthetic project field; see README/project brief.
+business_customers,primary_bank_account_type,VARCHAR,Synthetic project field; see README/project brief.
+industry_benchmark,industry_id,VARCHAR,Synthetic project field; see README/project brief.
+industry_benchmark,industry,VARCHAR,Synthetic project field; see README/project brief.
+industry_benchmark,benchmark_margin,"DECIMAL(3,2)",Synthetic project field; see README/project brief.
+industry_benchmark,benchmark_cash_flow_volatility,"DECIMAL(3,2)",Synthetic project field; see README/project brief.
+industry_benchmark,benchmark_collection_days,INTEGER,Synthetic project field; see README/project brief.
+industry_benchmark,benchmark_repayment_burden_pct,INTEGER,Synthetic project field; see README/project brief.
+industry_benchmark,payroll_intensity,"DECIMAL(3,2)",Synthetic project field; see README/project brief.
+industry_benchmark,seasonality_peak_month,INTEGER,Synthetic project field; see README/project brief.
+industry_benchmark,typical_transaction_intensity,"DECIMAL(2,1)",Synthetic project field; see README/project brief.
+industry_benchmark,economic_sensitivity,"DECIMAL(3,2)",Synthetic project field; see README/project brief.
+region_macro_index,month,VARCHAR,Calendar month YYYY-MM.
+region_macro_index,region_id,VARCHAR,Synthetic project field; see README/project brief.
+region_macro_index,region,VARCHAR,Synthetic project field; see README/project brief.
+region_macro_index,interest_rate_proxy,DOUBLE,Synthetic project field; see README/project brief.
+region_macro_index,local_demand_index,DOUBLE,Synthetic project field; see README/project brief.
+region_macro_index,small_business_confidence_index,DOUBLE,Synthetic project field; see README/project brief.
+region_macro_index,unemployment_proxy,DOUBLE,Synthetic project field; see README/project brief.
+relationship_managers,relationship_manager_id,VARCHAR,Synthetic project field; see README/project brief.
+relationship_managers,region_id,VARCHAR,Synthetic project field; see README/project brief.
+relationship_managers,portfolio_focus,VARCHAR,Synthetic project field; see README/project brief.
+relationship_managers,years_experience,INTEGER,Synthetic project field; see README/project brief.
+relationship_managers,portfolio_size_band,VARCHAR,Synthetic project field; see README/project brief.
+calendar_months,month,VARCHAR,Calendar month YYYY-MM.
+calendar_months,month_start_date,DATE,Synthetic project field; see README/project brief.
+calendar_months,year,BIGINT,Synthetic project field; see README/project brief.
+calendar_months,quarter,VARCHAR,Synthetic project field; see README/project brief.
+calendar_months,month_num,BIGINT,Synthetic project field; see README/project brief.
+calendar_months,is_year_end_season,INTEGER,Synthetic project field; see README/project brief.
+calendar_months,is_tax_season,INTEGER,Synthetic project field; see README/project brief.
+loans,loan_id,VARCHAR,Synthetic project field; see README/project brief.
+loans,business_id,VARCHAR,Unique business identifier.
+loans,product_type,VARCHAR,Synthetic project field; see README/project brief.
+loans,loan_amount,DOUBLE,Synthetic project field; see README/project brief.
+loans,start_date,DATE,Synthetic project field; see README/project brief.
+loans,interest_rate,DOUBLE,Synthetic project field; see README/project brief.
+loans,loan_term_months,INTEGER,Synthetic project field; see README/project brief.
+loans,maturity_date,DATE,Synthetic project field; see README/project brief.
+loans,collateral_type,VARCHAR,Synthetic project field; see README/project brief.
+loans,secured_flag,INTEGER,Synthetic project field; see README/project brief.
+loans,origination_channel,VARCHAR,Synthetic project field; see README/project brief.
+loans,underwriting_score_band,VARCHAR,Synthetic project field; see README/project brief.
+loans,initial_risk_grade,VARCHAR,Synthetic project field; see README/project brief.
+repayments,repayment_id,VARCHAR,Synthetic project field; see README/project brief.
+repayments,loan_id,VARCHAR,Synthetic project field; see README/project brief.
+repayments,business_id,VARCHAR,Unique business identifier.
+repayments,payment_month,VARCHAR,Synthetic project field; see README/project brief.
+repayments,scheduled_amount,DOUBLE,Synthetic project field; see README/project brief.
+repayments,actual_payment,DOUBLE,Synthetic project field; see README/project brief.
+repayments,days_past_due,INTEGER,Number of days repayment is late.
+repayments,payment_status,VARCHAR,Synthetic project field; see README/project brief.
+repayments,principal_remaining,DOUBLE,Synthetic project field; see README/project brief.
+repayments,auto_debit_success_flag,INTEGER,Synthetic project field; see README/project brief.
+repayments,payment_channel,VARCHAR,Synthetic project field; see README/project brief.
+bank_transactions,transaction_id,VARCHAR,Synthetic project field; see README/project brief.
+bank_transactions,business_id,VARCHAR,Unique business identifier.
+bank_transactions,transaction_date,DATE,Synthetic project field; see README/project brief.
+bank_transactions,transaction_month,VARCHAR,Synthetic project field; see README/project brief.
+bank_transactions,amount,DOUBLE,Transaction amount; positive inflow and negative outflow.
+bank_transactions,direction,VARCHAR,Synthetic project field; see README/project brief.
+bank_transactions,transaction_type,VARCHAR,Synthetic project field; see README/project brief.
+bank_transactions,counterparty_type,VARCHAR,Synthetic project field; see README/project brief.
+bank_transactions,payment_channel,VARCHAR,Synthetic project field; see README/project brief.
+bank_transactions,is_recurring,INTEGER,Synthetic project field; see README/project brief.
+bank_transactions,source_system,VARCHAR,Synthetic project field; see README/project brief.
+bank_transactions,transaction_memo,VARCHAR,Synthetic project field; see README/project brief.
+invoices,invoice_id,VARCHAR,Synthetic project field; see README/project brief.
+invoices,business_id,VARCHAR,Unique business identifier.
+invoices,invoice_date,DATE,Synthetic project field; see README/project brief.
+invoices,invoice_month,VARCHAR,Synthetic project field; see README/project brief.
+invoices,invoice_amount,DOUBLE,Synthetic project field; see README/project brief.
+invoices,due_date,DATE,Synthetic project field; see README/project brief.
+invoices,paid_date,DATE,Synthetic project field; see README/project brief.
+invoices,days_to_pay,INTEGER,Synthetic project field; see README/project brief.
+invoices,payment_status,VARCHAR,Synthetic project field; see README/project brief.
+invoices,is_late,INTEGER,Synthetic project field; see README/project brief.
+invoices,customer_type,VARCHAR,Synthetic project field; see README/project brief.
+invoices,customer_concentration_rank,INTEGER,Synthetic project field; see README/project brief.
+invoices,invoice_channel,VARCHAR,Synthetic project field; see README/project brief.
+payroll,payroll_id,VARCHAR,Synthetic project field; see README/project brief.
+payroll,business_id,VARCHAR,Unique business identifier.
+payroll,payroll_month,VARCHAR,Synthetic project field; see README/project brief.
+payroll,employee_count,INTEGER,Synthetic project field; see README/project brief.
+payroll,full_time_count,INTEGER,Synthetic project field; see README/project brief.
+payroll,part_time_count,INTEGER,Synthetic project field; see README/project brief.
+payroll,payroll_amount,DOUBLE,Synthetic project field; see README/project brief.
+payroll,avg_wage_estimate,DOUBLE,Synthetic project field; see README/project brief.
+payroll,overtime_hours_proxy,DOUBLE,Synthetic project field; see README/project brief.
+payroll,payroll_processor,VARCHAR,Synthetic project field; see README/project brief.
+business_monthly_snapshots,business_id,VARCHAR,Unique business identifier.
+business_monthly_snapshots,month,VARCHAR,Calendar month YYYY-MM.
+business_monthly_snapshots,month_start_date,DATE,Synthetic project field; see README/project brief.
+business_monthly_snapshots,opening_cash_balance_proxy,DOUBLE,Synthetic project field; see README/project brief.
+business_monthly_snapshots,ending_cash_balance_proxy,DOUBLE,Synthetic project field; see README/project brief.
+business_monthly_snapshots,avg_daily_balance_proxy,DOUBLE,Synthetic project field; see README/project brief.
+business_monthly_snapshots,overdraft_days_proxy,INTEGER,Synthetic project field; see README/project brief.
+business_monthly_snapshots,transaction_count,BIGINT,Synthetic project field; see README/project brief.
+business_monthly_snapshots,cash_inflow_observed,DOUBLE,Monthly cash inflow from bank transactions.
+business_monthly_snapshots,cash_outflow_observed,DOUBLE,Monthly cash outflow from bank transactions.
+business_monthly_snapshots,net_cash_flow_observed,DOUBLE,Monthly net cash flow.
+business_monthly_snapshots,invoice_count,BIGINT,Synthetic project field; see README/project brief.
+business_monthly_snapshots,invoice_amount_total,DOUBLE,Synthetic project field; see README/project brief.
+business_monthly_snapshots,avg_days_to_pay,DOUBLE,Synthetic project field; see README/project brief.
+business_monthly_snapshots,late_invoice_rate,DOUBLE,Synthetic project field; see README/project brief.
+business_monthly_snapshots,payroll_amount,DOUBLE,Synthetic project field; see README/project brief.
+business_monthly_snapshots,employee_count,INTEGER,Synthetic project field; see README/project brief.
+business_monthly_snapshots,scheduled_debt_service,DOUBLE,Synthetic project field; see README/project brief.
+business_monthly_snapshots,actual_debt_service,DOUBLE,Synthetic project field; see README/project brief.
+business_monthly_snapshots,max_dpd,INTEGER,Synthetic project field; see README/project brief.
+business_monthly_snapshots,available_credit_drawn_ratio,DOUBLE,Synthetic project field; see README/project brief.
+business_monthly_outcomes,business_id,VARCHAR,Unique business identifier.
+business_monthly_outcomes,month,VARCHAR,Calendar month YYYY-MM.
+business_monthly_outcomes,future_60d_dpd30_flag,INTEGER,Synthetic project field; see README/project brief.
+business_monthly_outcomes,future_60d_negative_cashflow_flag,INTEGER,Synthetic project field; see README/project brief.
+business_monthly_outcomes,future_60d_collection_delay_spike_flag,INTEGER,Synthetic project field; see README/project brief.
+business_monthly_outcomes,future_60d_cash_stress_observed,INTEGER,Optional future 60-day stress outcome.
+credit_reviews,review_id,VARCHAR,Synthetic project field; see README/project brief.
+credit_reviews,business_id,VARCHAR,Unique business identifier.
+credit_reviews,review_month,VARCHAR,Synthetic project field; see README/project brief.
+credit_reviews,review_type,VARCHAR,Synthetic project field; see README/project brief.
+credit_reviews,review_action,VARCHAR,Synthetic project field; see README/project brief.
+credit_reviews,internal_watchlist_flag_after_review,INTEGER,Synthetic project field; see README/project brief.
+credit_reviews,review_reason,VARCHAR,Synthetic project field; see README/project brief.
+credit_reviews,notes_available_flag,INTEGER,Synthetic project field; see README/project brief.

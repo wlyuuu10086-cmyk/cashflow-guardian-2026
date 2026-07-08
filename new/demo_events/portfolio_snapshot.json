@@ -1,0 +1,10 @@
+{
+  "message": {
+    "data": "eyJldmVudF90eXBlIjoicG9ydGZvbGlvX3NuYXBzaG90IiwiYXNfb2ZfbW9udGgiOiIyMDI1LTA2IiwicmVxdWVzdGVkX2J5IjoiZGVtby5wcmVzZW50ZXIiLCJtZXNzYWdlIjoiU2hvdyB0aGUgaGlnaGVzdCBsaXF1aWRpdHktcmlzayBidXNpbmVzc2VzLiIsInBhcmFtZXRlcnMiOnsibGltaXQiOjV9fQ==",
+    "messageId": "demo-portfolio-2025-06",
+    "attributes": {
+      "source": "demo"
+    }
+  },
+  "subscription": "projects/local/subscriptions/cashflow-guardian-demo"
+}

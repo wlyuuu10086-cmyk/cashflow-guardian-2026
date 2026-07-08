@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-07-03T10:53:45.202298Z",
+  "proposals": [
+    {
+      "proposal_id": "proposal_f8c570baa1664157",
+      "business_id": "B00001",
+      "as_of_month": "2025-12",
+      "proposed_action": "add_to_watchlist",
+      "proposed_by": "RM_John",
+      "proposer_role": "relationship_manager",
+      "created_at": "2026-07-03T10:31:31.429277Z",
+      "expires_at": "2026-08-02T10:31:31.429277Z",
+      "risk_score": 0.16852367688022285,
+      "risk_tier": "RED",
+      "scoring_mode": "ml_model",
+      "model_version": "RandomForestClassifier",
+      "evidence_codes": [
+        "RED_RISK_TIER",
+        "HIGH_REPAYMENT_BURDEN",
+        "ACTIVE_OVERDRAFT"
+      ],
+      "top_risk_drivers": [],
+      "benchmark_summary": {
+        "business_id": "B00001",
+        "as_of_month": "2025-12",
+        "status": "available"
+      },
+      "intervention_summary": {
+        "recommended_playbook": "",
+        "allowed_actions": []
+      },
+      "human_approval_required": true,
+      "status": "approved",
+      "source_provenance": {},
+      "future_data_used": false
+    },
+    {
+      "proposal_id": "proposal_dd0c1b130d3c4254",
+      "business_id": "B00001",
+      "as_of_month": "2025-12",
+      "proposed_action": "add_to_watchlist",
+      "proposed_by": "RM_John",
+      "proposer_role": "relationship_manager",
+      "created_at": "2026-07-03T10:53:45.198281Z",
+      "expires_at": "2026-08-02T10:53:45.198281Z",
+      "risk_score": 0.16852367688022285,
+      "risk_tier": "RED",
+      "scoring_mode": "ml_model",
+      "model_version": "RandomForestClassifier",
+      "evidence_codes": [
+        "RED_RISK_TIER",
+        "HIGH_REPAYMENT_BURDEN",
+        "ACTIVE_OVERDRAFT"
+      ],
+      "top_risk_drivers": [],
+      "benchmark_summary": {
+        "business_id": "B00001",
+        "as_of_month": "2025-12",
+        "status": "available"
+      },
+      "intervention_summary": {
+        "recommended_playbook": "",
+        "allowed_actions": []
+      },
+      "human_approval_required": true,
+      "status": "approved",
+      "source_provenance": {},
+      "future_data_used": false
+    }
+  ],
+  "decisions": [
+    {
+      "decision_id": "decision_b2f2ea5c82454560",
+      "proposal_id": "proposal_f8c570baa1664157",
+      "decision": "approve",
+      "reviewed_by": "Mgr_Sarah",
+      "reviewed_role": "risk_manager",
+      "rationale": "Risk score [REDACTED_PHONE]8022285 is high, and overdraft history is verified.",
+      "reviewed_at": "2026-07-03T10:31:31.437340Z"
+    },
+    {
+      "decision_id": "decision_a067347b87f5458d",
+      "proposal_id": "proposal_dd0c1b130d3c4254",
+      "decision": "approve",
+      "reviewed_by": "Mgr_Sarah",
+      "reviewed_role": "risk_manager",
+      "rationale": "Risk score [REDACTED_PHONE]8022285 is high, and overdraft history is verified.",
+      "reviewed_at": "2026-07-03T10:53:45.202298Z"
+    }
+  ],
+  "watchlist": [
+    "B00001"
+  ]
+}

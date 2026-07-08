@@ -1,0 +1,17 @@
+{
+  "body": {
+    "answer": "The event message was blocked by prompt-injection controls before tool execution.",
+    "audit_event_ids": [],
+    "correlation_id": "step8-injection",
+    "event_type": "portfolio_snapshot",
+    "model_explanation_used": false,
+    "results": {},
+    "session_id": "ambient-demo-cashflow-events-step8-injection",
+    "status": "blocked",
+    "trace_id": "trace_step8-injection",
+    "warnings": [
+      "Prompt-injection pattern detected."
+    ]
+  },
+  "status_code": 200
+}

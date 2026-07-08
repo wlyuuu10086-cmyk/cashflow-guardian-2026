@@ -1,0 +1,71 @@
+==========================================================
+      CASHFLOW GUARDIAN DATA ENGINE VALIDATION SCRIPT     
+==========================================================
+
+Database Path: D:\5-Days-AI-Kaggle\Capstone\cashflow_guardian\sme_cashflow_stress_project\data\sme_cashflow_stress.duckdb
+Database Size: 17313792 bytes
+
+--- 1. Database Immutability Check (Pre-run) ---
+File Modification Time: 1783066679.5767782
+Source Table Counts: {'business_customers': 1500, 'bank_transactions': 482790, 'invoices': 90000, 'loans': 2800, 'repayments': 46790, 'payroll': 36000, 'business_monthly_snapshots': 36000, 'industry_benchmark': 12}
+
+--- 2. Database Health Check ---
+Available: True
+Read-Only: True
+Required Tables Present: True
+Warnings: []
+
+--- 3. Business Data-Quality Check (Valid Case) ---
+Status: COMPLETED
+Can build features: True
+Errors: []
+Warnings: []
+
+--- 4. Business History Retrieval ---
+Retrieved months: 6
+Latest Month: 2025-06
+Cash Inflow: 23358.69
+Ending Balance: -1257853.73
+History Provenance: {'source_tables': ['business_monthly_snapshots'], 'as_of_month': '2025-06', 'query_timestamp': '2026-07-03T09:46:05Z', 'row_count': 6, 'future_data_used': False, 'warnings': []}
+
+--- 5. Portfolio Snapshot ---
+Target Month: 2025-06
+Records returned: 5
+Sample Record -> ID: B00001, Name: Business 00001, Risk Status: COMPLETED
+Portfolio Provenance: {'source_tables': ['business_monthly_snapshots', 'business_customers'], 'as_of_month': '2025-06', 'query_timestamp': '2026-07-03T09:46:05Z', 'row_count': 5, 'future_data_used': False, 'warnings': []}
+
+--- 6. Peer Benchmark ---
+Industry: E-commerce Sellers
+Business Margin: -3.6103
+Benchmark Margin: 0.3300
+Margin Delta: -3.9403
+Collection Days Delta: -1.0
+Benchmark Provenance: {'source_tables': ['industry_benchmark', 'business_customers', 'business_monthly_snapshots'], 'as_of_month': '2025-06', 'query_timestamp': '2026-07-03T09:46:05Z', 'row_count': 1, 'future_data_used': False, 'warnings': []}
+
+--- 7. Point-in-time Feature Construction ---
+Feature Vector length: 30
+Feature Names: ['cash_inflow', 'cash_outflow', 'net_cash_flow', 'ending_cash_balance', 'avg_daily_balance', 'overdraft_days', 'late_invoice_rate', 'avg_days_to_pay', 'payroll_amount', 'scheduled_debt_service'] ... (total 30)
+Future Data Used flag: False
+Feature Provenance future_data_used: False
+Feature Provenance table list: ['business_monthly_snapshots', 'business_customers', 'industry_benchmark']
+
+--- 8. Invalid Business Handling ---
+Expected Error Caught: BusinessIDNotFoundError - Business ID 'B99999' was not found in the database.
+
+--- 9. Boundary Month Handling (Latest Available Month) ---
+As of Month: 2025-12
+Data Quality Status: COMPLETED
+Can build features: True
+Errors: []
+Warnings: []
+
+--- 10. Attempted Source Write Rejection ---
+Expected Connection Write Error caught: InvalidInputException - Invalid Input Error: Cannot execute statement of type "INSERT" on database "sme_cashflow_stress" which is attached in read-only mode!
+Expected Safety Guard Write Error caught: DatabaseWriteError - Database write operation blocked: SQL contains prohibited 'INSERT' instruction.
+
+--- 11. Database Immutability Check (Post-run) ---
+File Modification Time: 1783066679.5767782
+Source Table Counts: {'business_customers': 1500, 'bank_transactions': 482790, 'invoices': 90000, 'loans': 2800, 'repayments': 46790, 'payroll': 36000, 'business_monthly_snapshots': 36000, 'industry_benchmark': 12}
+
+SUCCESS: Source database is completely untouched and unmodified.
+==========================================================

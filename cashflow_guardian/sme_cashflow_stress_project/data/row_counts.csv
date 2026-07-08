@@ -1,0 +1,14 @@
+table_name,row_count,column_count
+bank_transactions,482790,12
+invoices,90000,13
+repayments,46790,11
+business_monthly_snapshots,36000,21
+payroll,36000,10
+business_monthly_outcomes,36000,6
+credit_reviews,9898,8
+loans,2800,13
+business_customers,1500,20
+region_macro_index,144,7
+relationship_managers,60,5
+calendar_months,24,7
+industry_benchmark,12,10

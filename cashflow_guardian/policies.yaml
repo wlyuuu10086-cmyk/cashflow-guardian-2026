@@ -1,0 +1,133 @@
+# CashFlow Guardian Compliance and Security Policies
+
+# 1. Core Data Access Policies
+data_access:
+  source_database:
+    tables:
+      - business_customers
+      - bank_transactions
+      - invoices
+      - loans
+      - repayments
+      - payroll
+      - business_monthly_snapshots
+      - industry_benchmark
+      - region_dim
+      - region_macro_index
+      - relationship_managers
+    permission: "read-only"
+    enforcement: "Strict. Connections attempting to open in write-mode (w, w+, r+) must be rejected by the data engine wrapper."
+
+  demo_action_store:
+    path: "data/demo_actions.json"
+    permission: "read-write"
+    allowed_operations:
+      - create_proposal
+      - approve_proposal
+      - reject_proposal
+    enforcement: "Local file operations allowed. No schema modifications."
+
+# 2. Prohibited Actions (System Guardrails)
+prohibited_actions:
+  - name: "execute_arbitrary_sql"
+    description: "Accepting raw SQL from the LLM or user and running it against DuckDB."
+    enforcement: "No execute_sql, run_sql, or raw_query tools can exist in the codebase."
+  
+  - name: "modify_source_tables"
+    description: "Adding, updating, or deleting rows in the 11 raw source tables."
+    enforcement: "Checked by compile-time SQL structure checks and database-level read-only connections."
+
+  - name: "initiate_financial_transaction"
+    description: "Executing actual payment transactions, ACH transfers, wire approvals, or customer billing."
+    enforcement: "Strictly prohibited. System has zero outgoing payment routing modules."
+
+  - name: "change_credit_limits"
+    description: "Modifying limits or terms on active loans or lines of credit."
+    enforcement: "Strictly prohibited. System lacks integration hooks to banking cores."
+
+  - name: "send_external_email"
+    description: "Emailing or texting end clients directly."
+    enforcement: "Strictly prohibited. No email client libraries (e.g. smtplib, sendgrid) permitted in dependencies."
+
+  - name: "credential_disclosure"
+    description: "Exposing system API keys, database paths, or credentials in log outputs or agent outputs."
+    enforcement: "Blocked by security filter wrappers scanning for token-like patterns."
+
+# 3. Role Permissions Matrix
+role_permissions:
+  analyst:
+    allowed_permissions:
+      - "portfolio.read"
+      - "business.read"
+      - "risk.read"
+      - "benchmark.read"
+      - "scenario.run"
+      - "intervention.draft"
+      - "watchlist.propose"
+  
+  relationship_manager:
+    allowed_permissions:
+      - "portfolio.read"
+      - "business.read"
+      - "risk.read"
+      - "benchmark.read"
+      - "scenario.run"
+      - "intervention.draft"
+      - "watchlist.propose"
+      
+  risk_manager:
+    allowed_permissions:
+      - "portfolio.read"
+      - "business.read"
+      - "risk.read"
+      - "benchmark.read"
+      - "scenario.run"
+      - "intervention.draft"
+      - "watchlist.propose"
+      - "watchlist.approve"
+      - "watchlist.reject"
+
+  administrator:
+    allowed_permissions:
+      - "audit.read"
+
+  system_agent:
+    allowed_permissions:
+      - "portfolio.read"
+      - "business.read"
+      - "risk.read"
+      - "benchmark.read"
+      - "scenario.run"
+      - "intervention.draft"
+      - "watchlist.propose"
+
+# 4. Tool Permission Mapping
+tool_permissions:
+  check_database_health: "portfolio.read"
+  check_business_data_quality: "business.read"
+  get_portfolio_snapshot: "portfolio.read"
+  get_business_history: "business.read"
+  build_point_in_time_features: "business.read"
+  score_cashflow_risk: "risk.read"
+  compare_with_peers: "benchmark.read"
+  simulate_cashflow_scenario: "scenario.run"
+  draft_intervention_plan: "intervention.draft"
+  propose_watchlist_action: "watchlist.propose"
+  approve_or_reject_watchlist_action: "watchlist.approve"
+
+# 5. Logging and Auditing Policy
+logging_restrictions:
+  safe_fields:
+    - "timestamp"
+    - "relationship_manager_id"
+    - "business_id"
+    - "as_of_month"
+    - "risk_score"
+    - "risk_tier"
+    - "tool_invoked"
+    - "execution_time_ms"
+  masked_fields:
+    - "business_name"
+    - "transaction_memo"
+    - "review_notes"
+  enforcement: "Structured logger must drop/mask designated fields prior to committing logs to stdout or file."

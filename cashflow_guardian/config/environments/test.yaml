@@ -1,0 +1,22 @@
+# CashFlow Guardian Test Environment Configuration
+environment: "test"
+
+database:
+  # Uses the same read-only DuckDB database for integration testing
+  path: "sme_cashflow_stress_project/data/sme_cashflow_stress.duckdb"
+  read_only: true
+
+action_store:
+  # Separate file to prevent overwriting active demo files during tests
+  path: "tests/mock_data/test_demo_actions.json"
+
+logging:
+  level: "WARNING"
+  format: "[TEST] %(levelname)s - %(message)s"
+
+security:
+  mask_pii: true
+  enable_strict_sandbox: true
+
+agent:
+  mock_responses_enabled: true  # Allow mocking LLM calls during automated unit tests

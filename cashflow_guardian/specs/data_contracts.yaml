@@ -1,0 +1,241 @@
+# CashFlow Guardian Data Contracts Specification
+version: "1.0.0"
+
+contracts:
+  BusinessIdentifier:
+    type: string
+    pattern: "^BUS_\\d{3,4}$"
+    description: "Unique identifier for the SME business client, e.g., BUS_001, BUS_1500."
+
+  AsOfMonth:
+    type: string
+    pattern: "^\\d{4}-(0[1-9]|1[0-2])$"
+    description: "Calendar month in YYYY-MM format, constrained between 2024-01 and 2025-12."
+
+  ProvenanceMetadata:
+    type: object
+    required:
+      - source_tables
+      - as_of_month
+      - query_timestamp
+      - row_count
+      - future_data_used
+      - warnings
+    properties:
+      source_tables:
+        type: array
+        items:
+          type: string
+        description: "List of DuckDB physical tables queried to construct this result."
+      as_of_month:
+        $ref: "#/contracts/AsOfMonth"
+      query_timestamp:
+        type: string
+        format: date-time
+        description: "ISO-8601 timestamp of when the query was executed."
+      row_count:
+        type: integer
+        minimum: 0
+        description: "Number of rows returned or processed."
+      future_data_used:
+        type: boolean
+        description: "Must always be false during normal inference. If true, indicates a lookahead violation."
+      warnings:
+        type: array
+        items:
+          type: string
+        description: "Any execution warnings, e.g. nulls encountered, data anomalies."
+
+  DataQualityResult:
+    type: object
+    required:
+      - status
+      - missing_fields
+      - transaction_gaps
+      - has_sufficient_history
+      - errors
+    properties:
+      status:
+        type: string
+        enum: [COMPLETED, WARNING, BLOCKED]
+        description: "Verification status. BLOCKED prevents downstream risk scoring."
+      missing_fields:
+        type: array
+        items:
+          type: string
+        description: "List of critical columns containing NULL values."
+      transaction_gaps:
+        type: boolean
+        description: "True if there is a month with zero transactions after onboarding."
+      has_sufficient_history:
+        type: boolean
+        description: "True if the customer has at least 3 months of snapshots prior to and including the target month."
+      errors:
+        type: array
+        items:
+          type: string
+
+  BusinessHistoryResult:
+    type: object
+    required:
+      - business_id
+      - history_months
+      - snapshots
+      - provenance
+    properties:
+      business_id:
+        $ref: "#/contracts/BusinessIdentifier"
+      history_months:
+        type: integer
+        description: "Number of active months returned (capped at 24)."
+      snapshots:
+        type: array
+        items:
+          type: object
+          properties:
+            month:
+              $ref: "#/contracts/AsOfMonth"
+            ending_cash_balance:
+              type: number
+            net_cash_flow:
+              type: number
+            overdraft_days:
+              type: integer
+            late_invoice_rate:
+              type: number
+            repayment_days_past_due:
+              type: integer
+      provenance:
+        $ref: "#/contracts/ProvenanceMetadata"
+
+  PortfolioSnapshotResult:
+    type: object
+    required:
+      - as_of_month
+      - summary
+      - records
+      - provenance
+    properties:
+      as_of_month:
+        $ref: "#/contracts/AsOfMonth"
+      summary:
+        type: object
+        properties:
+          total_businesses_scanned:
+            type: integer
+          red_alert_count:
+            type: integer
+          amber_alert_count:
+            type: integer
+          green_alert_count:
+            type: integer
+      records:
+        type: array
+        items:
+          type: object
+          properties:
+            business_id:
+              $ref: "#/contracts/BusinessIdentifier"
+            business_name:
+              type: string
+            risk_tier:
+              type: string
+              enum: [RED, AMBER, GREEN]
+            risk_score:
+              type: number
+              minimum: 0.0
+              maximum: 1.0
+            principal_evidence:
+              type: array
+              items:
+                type: string
+            data_quality_status:
+              type: string
+              enum: [COMPLETED, WARNING, BLOCKED]
+      provenance:
+        $ref: "#/contracts/ProvenanceMetadata"
+
+  PeerBenchmarkResult:
+    type: object
+    required:
+      - business_id
+      - industry
+      - peer_metrics
+      - business_metrics
+      - deviations
+      - provenance
+    properties:
+      business_id:
+        $ref: "#/contracts/BusinessIdentifier"
+      industry:
+        type: string
+      peer_metrics:
+        type: object
+        properties:
+          benchmark_margin:
+            type: number
+          benchmark_cash_flow_volatility:
+            type: number
+          benchmark_collection_days:
+            type: number
+          benchmark_repayment_burden_pct:
+            type: number
+      business_metrics:
+        type: object
+        properties:
+          current_margin:
+            type: number
+          cash_flow_volatility:
+            type: number
+          avg_collection_days:
+            type: number
+          repayment_burden_pct:
+            type: number
+      deviations:
+        type: object
+        properties:
+          margin_delta:
+            type: number
+            description: "Business margin minus benchmark margin."
+          volatility_ratio:
+            type: number
+            description: "Business volatility divided by peer volatility."
+          collection_days_delta:
+            type: number
+            description: "Business collection days minus peer benchmark."
+      provenance:
+        $ref: "#/contracts/ProvenanceMetadata"
+
+  FeatureVectorResult:
+    type: object
+    required:
+      - business_id
+      - month
+      - features
+      - provenance
+    properties:
+      business_id:
+        $ref: "#/contracts/BusinessIdentifier"
+      month:
+        $ref: "#/contracts/AsOfMonth"
+      features:
+        type: object
+        properties:
+          cash_inflow_3m_avg:
+            type: number
+          cash_inflow_mom_change:
+            type: number
+          net_cash_flow_3m_avg:
+            type: number
+          net_cash_flow_6m_volatility:
+            type: number
+          repayment_burden_3m_avg:
+            type: number
+          payroll_burden_3m_avg:
+            type: number
+          overdraft_days_3m_sum:
+            type: integer
+          late_invoice_rate_3m_avg:
+            type: number
+      provenance:
+        $ref: "#/contracts/ProvenanceMetadata"

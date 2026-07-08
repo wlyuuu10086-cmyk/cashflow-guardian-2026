@@ -1,0 +1,41 @@
+{
+  "agents_cli_version": "0.6.1",
+  "manifest_added": true,
+  "project_recognized": true,
+  "agent_directory": "agents_cli_agent",
+  "root_agent_importable": true,
+  "root_agent_name": "cashflow_guardian_agent",
+  "plain_cli_tool_count": 7,
+  "authentication_mode": "Gemini API key; requested GOOGLE_CLOUD_PROJECT and GOOGLE_APPLICATION_CREDENTIALS absent.",
+  "local_agents_cli_run": {
+    "status": "success",
+    "model_invoked": true,
+    "details": [
+      "agents-cli run executed successfully under pure Gemini API Key authentication, invoking local inference and producing model response."
+    ]
+  },
+  "dataset_cases": 16,
+  "expectations_created": true,
+  "eval_config_created": true,
+  "trace_generation": {
+    "status": "halted_at_prerequisite",
+    "reason": "Stopped safely because agents-cli eval generate requires a configured GCP project and ADC to initialize Vertex AI client libraries, which are absent under clean local Gemini API Key authentication."
+  },
+  "deterministic_trace_check": {
+    "status": "passed_smoke_only",
+    "reason": "Deterministic trace check was run successfully on the Step 9A smoke traces. Real full dataset traces are not generated due to the GCP prerequisite.",
+    "cases_checked": 2,
+    "passed": true
+  },
+  "grading": {
+    "status": "halted_at_prerequisite",
+    "reason": "Bypassed because agents-cli eval grade requires Vertex AI Client instantiation which demands a GCP project and ADC configuration."
+  },
+  "regression_results": {
+    "compileall": "passed",
+    "pip_check": "passed",
+    "pytest": "147 passed"
+  },
+  "gemini_invoked": true,
+  "llm_judge_invoked": false
+}

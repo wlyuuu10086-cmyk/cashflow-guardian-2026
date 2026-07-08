@@ -1,0 +1,349 @@
+# CashFlow Guardian Tool Contracts Specification
+version: "1.0.0"
+
+tools:
+  - name: check_database_health
+    purpose: "Verifies DuckDB connection status and ensures source tables are accessible and read-only."
+    module: "src.cashflow_guardian.data_engine.connection"
+    permissions: "read-only"
+    allowed_tables: ["vw_table_row_counts"]
+    input_schema:
+      type: object
+      properties: {}
+    output_schema:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [HEALTHY, DEGRADED, UNREACHABLE]
+        read_only_verified:
+          type: boolean
+        database_size_bytes:
+          type: integer
+    prohibited_behavior: "Must not attempt to insert, update, or alter any table or system catalog."
+    failure_behavior: "Raise connection exception, return UNREACHABLE state."
+    human_approval_required: false
+    allow_direct_usage_in_response: true
+
+  - name: check_business_data_quality
+    purpose: "Evaluates the data presence, null counts, and history duration for a given business before scoring."
+    module: "src.cashflow_guardian.data_engine.validation"
+    permissions: "read-only"
+    allowed_tables: ["business_customers", "business_monthly_snapshots"]
+    input_schema:
+      type: object
+      required:
+        - business_id
+        - month
+      properties:
+        business_id:
+          type: string
+        month:
+          type: string
+    output_schema:
+      $ref: "data_contracts.yaml#/contracts/DataQualityResult"
+    prohibited_behavior: "Do not fabricate or impute missing data; report them as nulls/warnings."
+    failure_behavior: "Return a status of BLOCKED with the respective error logs."
+    human_approval_required: false
+    allow_direct_usage_in_response: true
+
+  - name: get_portfolio_snapshot
+    purpose: "Retrieves risk tiers, risk scores, and principal evidence for all SMEs for a target as-of month."
+    module: "src.cashflow_guardian.data_engine.retrieval"
+    permissions: "read-only"
+    allowed_tables: ["business_customers", "business_monthly_snapshots"]
+    input_schema:
+      type: object
+      required:
+        - month
+      properties:
+        month:
+          type: string
+    output_schema:
+      $ref: "data_contracts.yaml#/contracts/PortfolioSnapshotResult"
+    prohibited_behavior: "Do not query business outcomes or transactions occurring after the input month."
+    failure_behavior: "Return empty list, log query timeout, raise database exception."
+    human_approval_required: false
+    allow_direct_usage_in_response: true
+
+  - name: get_business_history
+    purpose: "Fetches historical cash flow snapshot data for a specific business up to the selected as-of month."
+    module: "src.cashflow_guardian.data_engine.retrieval"
+    permissions: "read-only"
+    allowed_tables: ["business_monthly_snapshots"]
+    input_schema:
+      type: object
+      required:
+        - business_id
+        - month
+      properties:
+        business_id:
+          type: string
+        month:
+          type: string
+    output_schema:
+      $ref: "data_contracts.yaml#/contracts/BusinessHistoryResult"
+    prohibited_behavior: "Do not retrieve snapshots for months newer than the requested month."
+    failure_behavior: "Return empty history with data error flag."
+    human_approval_required: false
+    allow_direct_usage_in_response: true
+
+  - name: build_point_in_time_features
+    purpose: "Calculates rolling averages, change ratios, and volatility for a business as of a point-in-time."
+    module: "src.cashflow_guardian.data_engine.features"
+    permissions: "read-only"
+    allowed_tables: ["business_monthly_snapshots", "bank_transactions", "repayments", "invoices", "payroll"]
+    input_schema:
+      type: object
+      required:
+        - business_id
+        - month
+      properties:
+        business_id:
+          type: string
+        month:
+          type: string
+    output_schema:
+      $ref: "data_contracts.yaml#/contracts/FeatureVectorResult"
+    prohibited_behavior: "Strictly forbidden from referencing transaction timestamps or months after the input month."
+    failure_behavior: "Return empty feature dictionary with warning flag."
+    human_approval_required: false
+    allow_direct_usage_in_response: false
+
+  - name: score_cashflow_risk
+    purpose: "Invokes the risk model pipeline to score a business's 60-day cash stress probability."
+    module: "src.cashflow_guardian.risk_engine.scoring"
+    permissions: "read-only"
+    allowed_tables: []
+    input_schema:
+      type: object
+      required:
+        - business_id
+        - month
+      properties:
+        business_id:
+          type: string
+        month:
+          type: string
+    output_schema:
+      type: object
+      required:
+        - business_id
+        - month
+        - risk_score
+        - risk_tier
+        - model_version
+        - feature_contributions
+      properties:
+        business_id:
+          type: string
+        month:
+          type: string
+        risk_score:
+          type: number
+        risk_tier:
+          type: string
+          enum: [RED, AMBER, GREEN]
+        model_version:
+          type: string
+        feature_contributions:
+          type: array
+          items:
+            type: object
+            properties:
+              feature_name:
+                type: string
+              contribution_value:
+                type: number
+    prohibited_behavior: "Do not execute if data quality checks return BLOCKED. Do not use future outcomes."
+    failure_behavior: "Fall back to rule-based stress calculator, log model loading error, raise warning."
+    human_approval_required: false
+    allow_direct_usage_in_response: true
+
+  - name: compare_with_peers
+    purpose: "Benchmarks a business's cash flow features against its industry segment benchmarks."
+    module: "src.cashflow_guardian.benchmark_engine.benchmarking"
+    permissions: "read-only"
+    allowed_tables: ["industry_benchmark", "business_customers", "business_monthly_snapshots"]
+    input_schema:
+      type: object
+      required:
+        - business_id
+        - month
+      properties:
+        business_id:
+          type: string
+        month:
+          type: string
+    output_schema:
+      $ref: "data_contracts.yaml#/contracts/PeerBenchmarkResult"
+    prohibited_behavior: "Do not use cross-industry average; must map to the exact industry_id."
+    failure_behavior: "Return peer benchmark object containing baseline defaults and warnings."
+    human_approval_required: false
+    allow_direct_usage_in_response: true
+
+  - name: simulate_cashflow_scenario
+    purpose: "Runs a deterministic calculation of projected cash balance and stress based on shock parameters."
+    module: "src.cashflow_guardian.scenario_engine.simulation"
+    permissions: "read-only"
+    allowed_tables: ["business_monthly_snapshots"]
+    input_schema:
+      type: object
+      required:
+        - business_id
+        - month
+      properties:
+        business_id:
+          type: string
+        month:
+          type: string
+        cash_inflow_multiplier:
+          type: number
+          default: 1.0
+        cash_outflow_multiplier:
+          type: number
+          default: 1.0
+        collection_delay_days:
+          type: integer
+          default: 0
+    output_schema:
+      type: object
+      required:
+        - business_id
+        - month
+        - baseline_cash_balance
+        - simulated_cash_balance
+        - projected_overdraft_risk
+        - risk_tier_change
+      properties:
+        business_id:
+          type: string
+        month:
+          type: string
+        baseline_cash_balance:
+          type: number
+        simulated_cash_balance:
+          type: number
+        projected_overdraft_risk:
+          type: boolean
+        risk_tier_change:
+          type: string
+    prohibited_behavior: "No LLM math; calculations must be computed strictly via deterministic Python logic."
+    failure_behavior: "Return original baseline with error indicator."
+    human_approval_required: false
+    allow_direct_usage_in_response: true
+
+  - name: draft_intervention_plan
+    purpose: "Maps specific cash flow risk evidence (e.g. late invoices vs loan burden) to policy-compliant action recommendations."
+    module: "src.cashflow_guardian.intervention_engine.routing"
+    permissions: "read-only"
+    allowed_tables: []
+    input_schema:
+      type: object
+      required:
+        - risk_tier
+        - primary_risk_driver
+      properties:
+        risk_tier:
+          type: string
+          enum: [RED, AMBER, GREEN]
+        primary_risk_driver:
+          type: string
+          enum: [volatility, repayment_burden, collection_delay, cash_depletion]
+    output_schema:
+      type: object
+      required:
+        - risk_tier
+        - recommended_playbook
+        - allowed_actions
+      properties:
+        risk_tier:
+          type: string
+        recommended_playbook:
+          type: string
+        allowed_actions:
+          type: array
+          items:
+            type: string
+    prohibited_behavior: "Must not recommend external notifications, credit-limit changes, or real financial transactions."
+    failure_behavior: "Output generic warning playbook."
+    human_approval_required: false
+    allow_direct_usage_in_response: true
+
+  - name: propose_watchlist_action
+    purpose: "Drafts a watchlist registration and stores it in the local pending action store."
+    module: "src.cashflow_guardian.intervention_engine.watchlist"
+    permissions: "write"
+    allowed_tables: []
+    input_schema:
+      type: object
+      required:
+        - business_id
+        - month
+        - reason
+        - RM_id
+      properties:
+        business_id:
+          type: string
+        month:
+          type: string
+        reason:
+          type: string
+        RM_id:
+          type: string
+    output_schema:
+      type: object
+      required:
+        - action_id
+        - status
+        - message
+      properties:
+        action_id:
+          type: string
+        status:
+          type: string
+          enum: [pending, error]
+        message:
+          type: string
+    prohibited_behavior: "Must write only to 'data/demo_actions.json'. Cannot write to DuckDB."
+    failure_behavior: "Return status = error, report write permissions/pathing failure."
+    human_approval_required: true
+    allow_direct_usage_in_response: true
+
+  - name: approve_or_reject_watchlist_action
+    purpose: "Finalizes a pending watchlist registration by updating its status in the local action store."
+    module: "src.cashflow_guardian.intervention_engine.watchlist"
+    permissions: "write"
+    allowed_tables: []
+    input_schema:
+      type: object
+      required:
+        - action_id
+        - decision
+        - approver_id
+      properties:
+        action_id:
+          type: string
+        decision:
+          type: string
+          enum: [approved, rejected]
+        approver_id:
+          type: string
+    output_schema:
+      type: object
+      required:
+        - action_id
+        - updated_status
+        - audit_timestamp
+      properties:
+        action_id:
+          type: string
+        updated_status:
+          type: string
+          enum: [approved, rejected]
+        audit_timestamp:
+          type: string
+    prohibited_behavior: "Cannot write to DuckDB. All changes restricted to 'data/demo_actions.json'."
+    failure_behavior: "Keep current action state, throw file IO exception."
+    human_approval_required: true
+    allow_direct_usage_in_response: true

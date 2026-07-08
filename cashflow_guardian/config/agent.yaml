@@ -1,0 +1,22 @@
+app_name: cashflow_guardian
+root_agent_name: cashflow_guardian_agent
+model_name: gemini-flash-latest
+temperature: 0.1
+max_output_tokens: 1024
+maximum_decoded_payload_bytes: 8192
+default_ambient_role: system_agent
+default_environment: local
+model_explanation_enabled: false
+otel_to_cloud: false
+safe_tool_allowlist:
+  - check_business_data_quality
+  - get_portfolio_snapshot
+  - get_business_history
+  - score_cashflow_risk
+  - compare_with_peers
+  - simulate_cashflow_scenario
+  - draft_intervention_plan
+pubsub:
+  route: /apps/cashflow_guardian/trigger/pubsub
+  default_host: 0.0.0.0
+  default_port: 8080

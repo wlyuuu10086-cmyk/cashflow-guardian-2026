@@ -1,0 +1,7 @@
+[
+  {
+    "case_id": "all_cases",
+    "error": "Inference failed to start because agents-cli requires a configured Google Cloud project and Application Default Credentials, which are absent in this Gemini API key-only environment.",
+    "type": "gcp_prerequisite_failure"
+  }
+]

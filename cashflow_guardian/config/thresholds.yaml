@@ -1,0 +1,43 @@
+# CashFlow Guardian Risk Thresholds Configuration
+#
+# ==============================================================================
+# IMPORTANT NOTICE: PROVISIONAL CONFIGURATION DEFAULTS ONLY
+# ==============================================================================
+# The thresholds defined in this file are initial defaults for development and demo.
+# They are NOT empirically validated.
+# The final production thresholds must be selected and optimized using:
+#   1. Validation-set results and PR-AUC curves
+#   2. Probability calibration curves (reliability diagrams)
+#   3. Trade-offs between Precision and Recall (e.g. false alarms vs missed defaults)
+#   4. Operational monitoring capacity of the relationship manager teams
+# ==============================================================================
+
+# Provisional Risk Score Ranges (Model Probability Output)
+risk_score_tiers:
+  green:
+    min: 0.00
+    max: 0.29
+    description: "Low Risk: Normal monitoring"
+  amber:
+    min: 0.30
+    max: 0.69
+    description: "Medium Risk: Increased surveillance / automated alerts"
+  red:
+    min: 0.70
+    max: 1.00
+    description: "High Risk: Actionable alerts / Credit Review / Watchlist add proposal"
+
+# Provisional Deterministic Financial Metric Warnings
+financial_indicators:
+  repayment_burden_ratio:
+    warning_threshold: 0.25      # Monthly scheduled repayments exceed 25% of cash inflows
+    critical_threshold: 0.40     # Monthly scheduled repayments exceed 40% of cash inflows
+  payroll_burden_ratio:
+    warning_threshold: 0.35      # Monthly payroll exceeds 35% of cash inflows
+    critical_threshold: 0.50     # Monthly payroll exceeds 50% of cash inflows
+  overdraft_days:
+    warning_threshold: 2         # More than 2 overdraft days in the month
+    critical_threshold: 5        # More than 5 overdraft days in the month
+  invoice_delay_days:
+    warning_threshold: 15        # Average days to pay invoices exceeds benchmark by 15 days
+    critical_threshold: 30       # Average days to pay invoices exceeds benchmark by 30 days

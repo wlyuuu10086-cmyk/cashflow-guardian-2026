@@ -1,0 +1,9 @@
+{
+  "body": {
+    "adk_agent": "cashflow_guardian_agent",
+    "otel_to_cloud": false,
+    "service": "cashflow_guardian",
+    "status": "ok"
+  },
+  "status_code": 200
+}

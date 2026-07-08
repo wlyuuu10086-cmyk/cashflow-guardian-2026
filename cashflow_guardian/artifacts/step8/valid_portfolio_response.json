@@ -1,0 +1,91 @@
+{
+  "body": {
+    "answer": "Processed portfolio_snapshot for 2025-06. Policy-gated tools completed: get_portfolio_snapshot.",
+    "audit_event_ids": [
+      "evt_b959383c9b124bbd"
+    ],
+    "correlation_id": "step8-valid-1",
+    "event_type": "portfolio_snapshot",
+    "model_explanation_used": false,
+    "results": {
+      "get_portfolio_snapshot": {
+        "allowed": true,
+        "approval_required": false,
+        "audit_event_id": "evt_b959383c9b124bbd",
+        "policy_codes": [
+          "POLICY_TOOL_ALLOWED"
+        ],
+        "provenance": {
+          "as_of_month": "2025-06",
+          "future_data_used": false,
+          "query_timestamp": "2026-07-03T11:27:58Z",
+          "row_count": 2,
+          "source_tables": [
+            "business_monthly_snapshots",
+            "business_customers"
+          ],
+          "warnings": []
+        },
+        "request_id": "step8-valid-1",
+        "result": {
+          "as_of_month": "2025-06",
+          "provenance": {
+            "as_of_month": "2025-06",
+            "future_data_used": false,
+            "query_timestamp": "2026-07-03T11:27:58Z",
+            "row_count": 2,
+            "source_tables": [
+              "business_monthly_snapshots",
+              "business_customers"
+            ],
+            "warnings": []
+          },
+          "records": [
+            {
+              "business_id": "B00001",
+              "business_name": "Business 00001",
+              "data_quality_status": "COMPLETED",
+              "principal_evidence": [
+                "High Credit Utilization",
+                "High Late Invoice Rate",
+                "High Repayment Burden"
+              ],
+              "risk_score": 0.16852367688022285,
+              "risk_tier": "RED"
+            },
+            {
+              "business_id": "B00002",
+              "business_name": "Business 00002",
+              "data_quality_status": "COMPLETED",
+              "principal_evidence": [
+                "Active Delinquency",
+                "High Credit Utilization",
+                "High Repayment Burden"
+              ],
+              "risk_score": 0.16852367688022285,
+              "risk_tier": "RED"
+            }
+          ],
+          "status": "success",
+          "summary": {
+            "amber_alert_count": 0,
+            "green_alert_count": 0,
+            "red_alert_count": 2,
+            "total_businesses_scanned": 2
+          },
+          "warnings": []
+        },
+        "safe_error": null,
+        "status": "success",
+        "tool_name": "get_portfolio_snapshot",
+        "trace_id": "trace_step8-valid-1",
+        "warnings": []
+      }
+    },
+    "session_id": "ambient-demo-cashflow-events-step8-valid-1",
+    "status": "success",
+    "trace_id": "trace_step8-valid-1",
+    "warnings": []
+  },
+  "status_code": 200
+}

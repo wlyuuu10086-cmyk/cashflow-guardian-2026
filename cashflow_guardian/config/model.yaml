@@ -1,0 +1,47 @@
+# CashFlow Guardian Model Configuration
+model:
+  version: "1.0.0"
+  selected_model_type: "xgboost"  # Choose between "logistic_regression" and "xgboost"
+  target_column: "future_60d_cash_stress_observed"
+  test_size: 0.20
+  random_state: 42
+
+features:
+  numerical_features:
+    - "cash_inflow_3m_avg"
+    - "cash_inflow_mom_change"
+    - "net_cash_flow_3m_avg"
+    - "net_cash_flow_6m_volatility"
+    - "repayment_burden_3m_avg"
+    - "payroll_burden_3m_avg"
+    - "overdraft_days_3m_sum"
+    - "late_invoice_rate_3m_avg"
+  categorical_features:
+    - "industry"
+    - "region"
+    - "revenue_band"
+    - "legal_structure"
+
+baseline_model:
+  type: "logistic_regression"
+  hyperparameters:
+    penalty: "l2"
+    C: 1.0
+    solver: "lbfgs"
+    max_iter: 1000
+    class_weight: "balanced"
+
+candidate_model:
+  type: "xgboost"
+  hyperparameters:
+    n_estimators: 100
+    max_depth: 5
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    scale_pos_weight: 5.0  # Balance adjustment for sparse positive stress labels
+    eval_metric: "logloss"
+
+scoring:
+  refuse_if_history_less_than_months: 3
+  missing_value_imputation: "none"  # Do not fabricate data; report data anomalies

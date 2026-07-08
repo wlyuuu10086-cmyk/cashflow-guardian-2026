@@ -1,0 +1,10 @@
+{
+  "message": {
+    "data": "eyJldmVudF90eXBlIjoiYW5hbHl6ZV9jb21wYW55IiwiYnVzaW5lc3NfaWQiOiJCMDEzOTUiLCJhc19vZl9tb250aCI6IjIwMjUtMDYiLCJyZXF1ZXN0ZWRfYnkiOiJkZW1vLnByZXNlbnRlciIsIm1lc3NhZ2UiOiJBbmFseXplIHRoaXMgY29tcGFueSdzIGNhc2gtZmxvdyBzdHJlc3MgYW5kIGV4cGxhaW4gdGhlIGRyaXZlcnMuIiwicGFyYW1ldGVycyI6eyJpbmNsdWRlX2JlbmNobWFyayI6dHJ1ZSwiaW5jbHVkZV9oaXN0b3J5Ijp0cnVlLCJpbmNsdWRlX2ludGVydmVudGlvbiI6dHJ1ZX19",
+    "messageId": "demo-analyze-b01395-2025-06",
+    "attributes": {
+      "source": "demo"
+    }
+  },
+  "subscription": "projects/local/subscriptions/cashflow-guardian-demo"
+}

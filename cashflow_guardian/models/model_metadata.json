@@ -1,0 +1,111 @@
+{
+    "target_formula": "future_60d_dpd30_flag == 1 OR (future_60d_negative_cashflow_flag == 1 AND future_60d_collection_delay_spike_flag == 1)",
+    "target_prevalence": 0.13836666666666667,
+    "feature_list": [
+        "cash_inflow_3m_avg",
+        "cash_inflow_mom_change",
+        "net_cash_flow_3m_avg",
+        "net_cash_flow_6m_volatility",
+        "repayment_burden_3m_avg",
+        "payroll_burden_3m_avg",
+        "overdraft_days_3m_sum",
+        "late_invoice_rate_3m_avg",
+        "industry",
+        "region",
+        "revenue_band",
+        "legal_structure"
+    ],
+    "minimum_lookback": 3,
+    "split_periods": {
+        "train": {
+            "start": "2024-03",
+            "end": "2025-04"
+        },
+        "validation": {
+            "start": "2025-05",
+            "end": "2025-07"
+        },
+        "test": {
+            "start": "2025-08",
+            "end": "2025-10"
+        }
+    },
+    "split_row_counts": {
+        "train": 21000,
+        "validation": 4500,
+        "test": 4500
+    },
+    "class_rates_by_split": {
+        "train": 0.14104761904761906,
+        "validation": 0.13777777777777778,
+        "test": 0.12644444444444444
+    },
+    "preprocessing_pipeline": "ColumnTransformer: StandardScaler (numerical) + OneHotEncoder (categorical)",
+    "selected_model": "RandomForestClassifier",
+    "calibration_method": "isotonic regression",
+    "selected_thresholds": {
+        "low": {
+            "min": 0.0,
+            "max": 0.1
+        },
+        "medium": {
+            "min": 0.1,
+            "max": 0.1685
+        },
+        "high": {
+            "min": 0.1685,
+            "max": 0.2734
+        },
+        "critical": {
+            "min": 0.2734,
+            "max": 1.0
+        }
+    },
+    "final_test_metrics": {
+        "baseline_logistic_regression": {
+            "pr_auc": 0.2242846315760502,
+            "roc_auc": 0.6442933216615796,
+            "brier_score": 0.10697966787029728,
+            "precision": 0.2511737089201878,
+            "recall": 0.18804920913884007,
+            "f1_score": 0.2150753768844221,
+            "confusion_matrix": [
+                [
+                    3612,
+                    319
+                ],
+                [
+                    462,
+                    107
+                ]
+            ],
+            "recall_at_top_10": 0.19507908611599298,
+            "precision_at_top_10": 0.24666666666666667,
+            "lift_at_top_10": 1.9507908611599298
+        },
+        "random_forest": {
+            "pr_auc": 0.21607624532528039,
+            "roc_auc": 0.6422275911494368,
+            "brier_score": 0.1070650144753561,
+            "precision": 0.1806060606060606,
+            "recall": 0.523725834797891,
+            "f1_score": 0.26858945470932855,
+            "confusion_matrix": [
+                [
+                    2579,
+                    1352
+                ],
+                [
+                    271,
+                    298
+                ]
+            ],
+            "recall_at_top_10": 0.19507908611599298,
+            "precision_at_top_10": 0.24666666666666667,
+            "lift_at_top_10": 1.9507908611599298
+        }
+    },
+    "known_limitations": "Model evaluated on synthetic database with highly prevalent negative net cash flows. Calibration fitted using small validation set. Categorical encoder ignores unseen categories during deployment.",
+    "training_timestamp": "2026-07-03T17:58:00.732249",
+    "reproducibility_identifier": "repro_random_state_42_split_202504"
+}

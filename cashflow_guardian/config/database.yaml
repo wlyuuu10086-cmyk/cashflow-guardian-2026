@@ -1,0 +1,27 @@
+# CashFlow Guardian Database Configuration
+database:
+  provider: "duckdb"
+  # Path is relative to the cashflow_guardian directory
+  path: "sme_cashflow_stress_project/data/sme_cashflow_stress.duckdb"
+  read_only: true  # Primary security enforcement
+  connection_timeout_ms: 5000
+
+action_store:
+  provider: "json"
+  # Target file for proposed and approved watchlist actions
+  path: "data/demo_actions.json"
+  read_only: false  # The only writable store for demonstration actions
+
+schemas:
+  expected_tables:
+    - "business_customers"
+    - "bank_transactions"
+    - "invoices"
+    - "loans"
+    - "repayments"
+    - "payroll"
+    - "business_monthly_snapshots"
+    - "industry_benchmark"
+    - "region_dim"
+    - "region_macro_index"
+    - "relationship_managers"
